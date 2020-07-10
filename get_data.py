@@ -9,7 +9,7 @@ async def fetch(session, url, headers=None):
         return await resp.json()
 
 
-async def get_data(league_id):
+async def get_data(league_id, delete_cancelled_gameweeks=True):
 
     async with aiohttp.ClientSession() as session:
         headers = {"User-Agent": "https://github.com/ChrisMusson/FPL_League_Bar_Chart_Race"}
@@ -31,5 +31,11 @@ async def get_data(league_id):
             dataframe = dataframe.rename(columns={"total_points": user_data[user_id]})
             all_dataframes.append(dataframe)
 
-        data = pd.concat(all_dataframes, axis=1)
+    data = pd.concat(all_dataframes, axis=1)
+
+    if delete_cancelled_gameweeks:
+        data.drop(data.index[list(range(29, 38))], inplace=True)
+        data = data.reset_index(drop=True)
+    # data.index = data.index + 1
+
     return data

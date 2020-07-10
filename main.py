@@ -11,7 +11,12 @@ async def main():
 
     bcr.bar_chart_race(
         df=data, 
-        filename=f"{league_id}.mp4"  
+        filename=f"{league_id}.mp4",
+        period_length=1500,
+        steps_per_period=20,
+        n_bars=10,
+        filter_column_colors=True,
+        period_fmt='{x:.0f}'
     )
 
 if __name__ == "__main__":
