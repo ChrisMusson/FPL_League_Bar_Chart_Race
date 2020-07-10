@@ -9,10 +9,7 @@ async def fetch(session, url, headers=None):
         return await resp.json()
 
 
-async def get_data():
-    
-    with open("league_id.txt", "r") as f:
-        league_id = f.read()
+async def get_data(league_id):
 
     async with aiohttp.ClientSession() as session:
         headers = {"User-Agent": "https://github.com/ChrisMusson/FPL_League_Bar_Chart_Race"}
